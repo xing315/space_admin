@@ -1,0 +1,6 @@
+<script setup>
+import {ref} from 'vue';import {useRoute,useRouter} from 'vue-router';import {supabase,isOwner} from '../lib/supabase.js'
+const email=ref(''),password=ref(''),error=ref(''),loading=ref(false),route=useRoute(),router=useRouter()
+async function login(){loading.value=true;error.value='';const {data,error:e}=await supabase.auth.signInWithPassword({email:email.value,password:password.value});loading.value=false;if(e){error.value=e.message;return}if(!isOwner(data.user)){await supabase.auth.signOut();router.replace('/forbidden');return}router.replace(String(route.query.redirect||'/dashboard'))}
+</script>
+<template><div class="login-page"><form class="login-card" @submit.prevent="login"><div class="brand"><i>Z</i><span><b>ZHANG SPACE</b><small>OWNER CONSOLE</small></span></div><h1>欢迎回来</h1><p>登录后管理内容、功能开放状态与应用运行数据。</p><div v-if="error" class="notice">{{error}}</div><div class="field"><label>邮箱</label><input v-model="email" type="email" autocomplete="email" required></div><div class="field"><label>密码</label><input v-model="password" type="password" autocomplete="current-password" required></div><button class="btn" :disabled="loading">{{loading?'正在验证…':'进入管理后台'}}</button></form></div></template>

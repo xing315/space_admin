@@ -1,0 +1,1 @@
+<template><div class="login-page"><section class="login-card"><div class="brand"><i>!</i><span><b>ACCESS DENIED</b><small>OWNER ONLY</small></span></div><h1>无权访问</h1><p>该后台仅接受由服务端写入 <code>app_metadata.role=owner</code> 的账号。</p><router-link class="btn" style="display:block;text-align:center;text-decoration:none" to="/login">返回登录</router-link></section></div></template>
